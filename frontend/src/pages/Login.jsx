@@ -42,22 +42,35 @@ function Login() {
         }
     }
      const googlelogin = async () => {
-            try {
-                const response = await signInWithPopup(auth , provider)
-                let user = response.user
-                let name = user.displayName;
-                let email = user.email
-    
-                const result = await axios.post(serverUrl + "/api/auth/googlelogin" ,{name , email} , {withCredentials:true})
-                console.log(result.data)
-                getCurrentUser()
-            navigate("/")
-    
-            } catch (error) {
-                console.log(error)
-            }
-            
-        }
+    try {
+        console.log("Google Login Started");
+
+        const response = await signInWithPopup(auth, provider);
+
+        console.log("Firebase Response:", response);
+
+        let user = response.user;
+        let name = user.displayName;
+        let email = user.email;
+
+        console.log("Google User:", name, email);
+
+        const result = await axios.post(
+            serverUrl + "/api/auth/googlelogin",
+            { name, email },
+            { withCredentials: true }
+        );
+
+        console.log("Backend Response:", result.data);
+
+        getCurrentUser();
+        navigate("/");
+
+    } catch (error) {
+        console.log("Google Login Error:", error);
+        console.log("Backend Error:", error.response?.data);
+    }
+}
   return (
     <div className='w-[100vw] h-[100vh] bg-gradient-to-l from-[#141414] to-[#0c2025] text-[white] flex flex-col items-center justify-start'>
     <div className='w-[100%] h-[80px] flex items-center justify-start px-[30px] gap-[10px] cursor-pointer' onClick={()=>navigate("/")}>

@@ -8,17 +8,27 @@ function AdminContext({children}) {
     let {serverUrl} = useContext(authDataContext)
 
 
-    const getAdmin = async () => {
-      try {
-           let result = await axios.get(serverUrl + "/api/user/getadmin",{withCredentials:true})
+    
+const getAdmin = async () => {
+    try {
+        const result = await axios.get(
+            serverUrl + "/api/user/getadmin",
+            { withCredentials: true }
+        );
 
-      setAdminData(result.data)
-      console.log(result.data)
-      } catch (error) {
-        setAdminData(null)
-        console.log(error)
-      }
+        setAdminData(result.data);
+        console.log("Admin Data:", result.data);
+
+        return result.data;
+
+    } catch (error) {
+        setAdminData(null);
+        console.log("Get Admin Error:", error.response?.data || error.message);
+
+        return null;
     }
+};
+
 
     useEffect(()=>{
      getAdmin()

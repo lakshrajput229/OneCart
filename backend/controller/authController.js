@@ -23,8 +23,8 @@ export const registration = async (req,res) => {
     let token = await genToken(user._id)
     res.cookie("token",token,{
         httpOnly:true,
-        secure:false,
-        sameSite: "Strict",
+        secure:true,
+        sameSite: "none",
         maxAge: 7 * 24 * 60 * 60 * 1000
     })
     return res.status(201).json(user)
@@ -95,7 +95,7 @@ export const googleLogin = async (req,res) => {
     return res.status(200).json(user)
 
     } catch (error) {
-         console.log("googleLogin error")
+         console.log("googleLogin error", error)
     return res.status(500).json({message:`googleLogin error ${error}`})
     }
     

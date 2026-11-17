@@ -17,23 +17,33 @@ function Login() {
           let navigate = useNavigate()
           const [loading,setLoading] = useState(false)
 
-          const AdminLogin = async (e) => {
-            setLoading(true)
-            e.preventDefault()
-            try {
-              const result = await axios.post(serverUrl + '/api/auth/adminlogin',{email , password} , {withCredentials:true})
-              console.log(result.data)
-              toast.success("AdminLogin Successfully")
-              getAdmin()
-              navigate("/")
-              setLoading(false)
-            } catch (error) {
-              console.log(error)
-              toast.error("AdminLogin Failed")
-              setLoading(false)
-            }
-            
-          }
+          
+const AdminLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+        const result = await axios.post(
+            serverUrl + '/api/auth/adminlogin',
+            { email, password },
+            { withCredentials: true }
+        );
+
+        console.log("Login Response:", result.data);
+
+        await getAdmin();
+
+        toast.success("Admin Login Successfully");
+        navigate("/");
+        
+    } catch (error) {
+        console.log("Admin Login Error:", error.response?.data || error.message);
+        toast.error(error.response?.data?.message || "Admin Login Failed");
+    } finally {
+        setLoading(false);
+    }
+};
+
   return (
     <div className='w-[100vw] h-[100vh] bg-gradient-to-l from-[#141414] to-[#0c2025] text-[white] flex flex-col items-center justify-start'>
        <div className='w-[100%] h-[80px] flex items-center justify-start px-[30px] gap-[10px] cursor-pointer' >

@@ -59,6 +59,7 @@ function Registration() {
 
         } catch (error) {
             console.log(error)
+            console.log("Google Signup Error:", error.response?.data || error);
             toast.error("User Registration Failed")
         }
         
