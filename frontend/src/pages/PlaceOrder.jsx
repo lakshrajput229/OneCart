@@ -84,7 +84,6 @@ function PlaceOrder() {
         case 'cod': 
       
         const result = await axios.post(serverUrl + "/api/order/placeorder" , orderData , {withCredentials:true})
-        console.log(result.data)
         if(result.data){
             setCartItem({})
             toast.success("Order Placed")

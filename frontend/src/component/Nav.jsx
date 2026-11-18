@@ -23,7 +23,6 @@ function Nav() {
     const handleLogout = async () => {
         try {
             const result = await axios.get(serverUrl + "/api/auth/logout" , {withCredentials:true})
-            console.log(result.data)
            
             navigate("/login")
         } catch (error) {

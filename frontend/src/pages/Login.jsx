@@ -30,7 +30,6 @@ function Login() {
             let result = await axios.post(serverUrl + '/api/auth/login',{
                 email,password
             },{withCredentials:true})
-            console.log(result.data)
             setLoading(false)
             getCurrentUser()
             navigate("/")
@@ -43,17 +42,14 @@ function Login() {
     }
      const googlelogin = async () => {
     try {
-        console.log("Google Login Started");
 
         const response = await signInWithPopup(auth, provider);
 
-        console.log("Firebase Response:", response);
 
         let user = response.user;
         let name = user.displayName;
         let email = user.email;
 
-        console.log("Google User:", name, email);
 
         const result = await axios.post(
             serverUrl + "/api/auth/googlelogin",
@@ -61,14 +57,12 @@ function Login() {
             { withCredentials: true }
         );
 
-        console.log("Backend Response:", result.data);
 
         getCurrentUser();
         navigate("/");
 
     } catch (error) {
         console.log("Google Login Error:", error);
-        console.log("Backend Error:", error.response?.data);
     }
 }
   return (
